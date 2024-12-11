@@ -1,0 +1,40 @@
+{
+  "camels": [
+    {
+      "id": "p3ha",
+      "camelName": "",
+      "ownerName": "",
+      "age": "",
+      "healthStatus": "",
+      "breed": "",
+      "color": "",
+      "contact": "",
+      "gender": "",
+      "additionalData": ""
+    },
+    {
+      "id": "2370",
+      "camelName": "",
+      "ownerName": "",
+      "age": "",
+      "healthStatus": "",
+      "breed": "",
+      "color": "",
+      "contact": "",
+      "gender": "",
+      "additionalData": ""
+    },
+    {
+      "id": "6827",
+      "camelName": "sdfghdfrgh",
+      "ownerName": "",
+      "age": "25",
+      "healthStatus": "hjghfgds",
+      "breed": "",
+      "color": "",
+      "contact": "",
+      "gender": "",
+      "additionalData": ""
+    }
+  ]
+}
