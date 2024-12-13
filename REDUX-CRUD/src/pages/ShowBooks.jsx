@@ -34,16 +34,20 @@ const CamelHistory = () => {
         <>
             {
                 errMsg 
-                ?   <h1>{errMsg}</h1> 
+                ?   <h1 className='text-danger'>{errMsg}</h1> 
                 :   
                     isLoading 
                     ?   
-                    <h1>Loading...</h1>
+                    <div className="loader-container">
+                        <div className="glowing-circle">
+                            <div className="inner-glow"></div>
+                        </div>
+                        <div className="loading-text">Loading...</div>
+                    </div>
                     :
                     <Table striped bordered hover className='mt-5' data-bs-theme="dark">
                         <thead>
                             <tr>
-                                <th>Book Id</th>
                                 <th>Book Title</th>
                                 <th>Author</th>
                                 <th>Genres</th>
@@ -58,7 +62,6 @@ const CamelHistory = () => {
                             {
                                 books.map((data, index) => (
                                     <tr key={index}>
-                                        <td>{data.id}</td>
                                         <td>{data.bTitle}</td>
                                         <td>{data.author}</td>
                                         <td>{data.genre}</td>
@@ -67,9 +70,9 @@ const CamelHistory = () => {
                                         <td>{data.bprice}</td>
                                         <td>{data.bpages}</td>
                                         <td>
-                                            <Button variant='primary' onClick={() => handleEdit(data.id)}>Edit</Button>
-                                            || <Button variant='danger' onClick={() => handleDelete(data.id)}>Delete</Button>
-                                            || <Button variant='secondary' onClick={() => handleView(data.id)}>View</Button>
+                                            <Button className='primary text-primary'  onClick={() => handleEdit(data.id)}>Edit</Button>
+                                            || <Button className='danger text-danger border-danger' onClick={() => handleDelete(data.id)}>Delete</Button>
+                                            || <Button className='success text-success border-success' onClick={() => handleView(data.id)}>View</Button>
                                         </td>
                                     </tr>
                                 ))

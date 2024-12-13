@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBooksAsync } from '../services/actions/book.action';
+import { addBooksAsync, getBooksAsync } from '../services/actions/book.action';
 import { useNavigate } from 'react-router';
 import generateUniqueId from 'generate-unique-id';
 
-const CamelRegistration = () => {
+const AddBook = () => {
 
-    const {isSuccess, errMsg} = useSelector(state => state.BookReducers)
+    const {isSuccess, errMsg, isLoading} = useSelector(state => state.BookReducers)
 
     const [formData, setFormData] = useState({
         id : generateUniqueId({
@@ -28,17 +28,39 @@ const CamelRegistration = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+
+        const { name, value, files } = e.target;
+    
+        if(name === "bimage" && files.length > 0){
+
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                
+                setFormData((prevData) => ({
+                    ...prevData,
+                    [name] : reader.result,
+                }));
+            };
+            reader.readAsDataURL(file);
+        }else{
+            setFormData((prevData) => ({
+
+                ...prevData,
+                [name] : value,
+            }));
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addBooksAsync(formData))
 
+        if (!formData.bTitle || !formData.author || !formData.pyear || !formData.bprice || !formData.bpages) {
+            alert("Please fill in all required fields");
+            return;
+        }
+
+        dispatch(addBooksAsync(formData))
     };
 
     useEffect(() => {
@@ -75,7 +97,7 @@ const CamelRegistration = () => {
                         <Col md={8}>
                             <Form.Group controlId="bimage" className='mt-5'>
                                 <Form.Label>Book Image : </Form.Label>
-                                <Form.Control type="file" placeholder="Enter Book Image" name="bimage" value={formData.bimage} onChange={handleChange} />
+                                <Form.Control type="file" placeholder="Enter Book Image" name="bimage" onChange={handleChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -126,4 +148,4 @@ const CamelRegistration = () => {
         </>
     )
 }
-export default CamelRegistration;
+export default AddBook;

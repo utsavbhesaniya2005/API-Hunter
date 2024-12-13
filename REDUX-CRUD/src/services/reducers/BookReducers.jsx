@@ -20,7 +20,7 @@ const BookReducers = (state = initialState, action) => {
 
         case 'ADD_BOOK_DATA_REJ' :
 
-            return { ...state, errMsg : action.payload} 
+            return { ...state, errMsg : action.payload, isLoading : false} 
 
         case 'FIND_BOOK_SUC' : 
 
@@ -52,13 +52,15 @@ const BookReducers = (state = initialState, action) => {
 
             return{
                 ...state,
-                errMsg : action.payload
+                errMsg : action.payload,
+                isLoading : false
             }
             
-        case 'DELETE_BOOK' :
+        case 'DELETE_BOOK_REJ' :
 
             return{
                 ...state,
+                errMsg : action.payload,
                 isLoading : false
             }
 

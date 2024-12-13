@@ -43,10 +43,10 @@ export const updateBookRej = (msg) => {
     }
 }
 
-export const deleteBook = (id) => {
+export const deleteBookTRej = (msg) => {
     return{
-        type : "DELETE_BOOK",
-        payload : id
+        type : "DELETE_BOOK_REJ",
+        payload : msg
     }
 }
 
@@ -70,32 +70,21 @@ export const loading = () => {
     }
 }
 
-// thunk is used to give logics in action and thunk always return a function and action always return a logics and also it dispatch method which used to pass data from actions to reducer and it is provided by think.
-
-export const getAsyncDelete = (id) => {
-    return (dispatch) => {
-
-        dispatch(loading())
-        
-        setTimeout(() => {
-            dispatch(deleteBook(id))
-        }, 2000)
-    }
-}
-
 export const getBooksAsync = () => {
     return (dispatch) => {
 
         dispatch(loading())
         
-        api.get('/books').then(res => {
-            console.log("Res",res.data);
-            dispatch(getBooksDataSuc(res.data))
-            
-        }).catch(err => {
-            console.log(err);
-            dispatch(getBooksDataRej(err.message))
-        })
+        setTimeout(() => {
+            api.get('/books').then(res => {
+    
+                dispatch(getBooksDataSuc(res.data))
+                
+            }).catch(err => {
+             
+                dispatch(getBooksDataRej(err.message))
+            })
+        }, 2000)
     }
 }
 
@@ -104,14 +93,15 @@ export const addBooksAsync = (data) => {
 
         dispatch(loading())
         
-        api.post('/books', data).then(res => {
-            console.log(res);
-            dispatch(addBookDataSuc(res.data))
+        setTimeout(() => {
+            api.post('/books', data).then(res => {
+       
+                dispatch(addBookDataSuc(res.data))     
+            }).catch(err => {
             
-        }).catch(err => {
-            console.log(err);
-            dispatch(addBookDataRej(err.message))
-        })
+                dispatch(addBookDataRej(err.message))
+            })
+        }, 2000)
     }
 }
 
@@ -121,15 +111,15 @@ export const findBooksAsync = (id) => {
 
         dispatch(loading())
 
-        api.get(`/books/${id}`).then((res) => {
+        setTimeout(() => {
+            api.get(`/books/${id}`).then((res) => {
 
-            console.log("GetBooks",res);
-            dispatch(findBookSuc(res.data))
-        }).catch((err) => {
-
-            console.log("Get Message",err);
-            dispatch(findBookRej(err.message))
-        })
+                dispatch(findBookSuc(res.data))
+            }).catch((err) => {
+    
+                dispatch(findBookRej(err.message))
+            })
+        }, 2000)
     }
 }   
 
@@ -138,13 +128,15 @@ export const updateBookAsync = (data) => {
     return dispatch => {
         dispatch(loading())
 
-        api.put(`/books/${data.id}`,data).then((res) => {
-            console.log("update",res);
-            dispatch(updateBookSuc(res.data))
-        }).catch((err) => {
-            console.log("updateErr",err);
-            dispatch(updateBookRej(err.message))
-        })
+        setTimeout(() => {
+            api.put(`/books/${data.id}`,data).then((res) => {
+      
+                dispatch(updateBookSuc(res.data))
+            }).catch((err) => {
+    
+                dispatch(updateBookRej(err.message))
+            })
+        }, 2000)
     }
 
 }
@@ -153,11 +145,12 @@ export const deleteBookAsync = (id) => {
     return dispatch => {
         dispatch(loading())
 
-        api.delete(`/books/${id}`).then((res) => {
-            console.log("delteBook",res);
+        api.delete(`/books/${id}`).then(() => {
+        
             dispatch(getBooksAsync());
         }).catch((err) => {
-            console.log("Bookmsg",err);
+
+            dispatch(deleteBookTRej(err.message))
         })
     }
 }
