@@ -15,10 +15,10 @@ const Header = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='ms-auto'>
                         <Nav className='me-5'>
-                            <Link to='/add' className='navigate'>Camel Registration</Link>
+                            <Link to='/add' className='navigate'>Add Book</Link>
                         </Nav>
                         <Nav>
-                            <Link to='/' className='navigate'>Camel History</Link>
+                            <Link to='/' className='navigate'>Book History</Link>
                         </Nav>
                     </Nav>
                     </Navbar.Collapse>

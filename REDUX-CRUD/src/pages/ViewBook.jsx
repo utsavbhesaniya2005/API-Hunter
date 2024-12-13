@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useNavigate, useParams } from 'react-router';
-import { findSingleCamel, updateCamel } from '../../services/actions/camel.action';
+import { Link, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { findBooksAsync } from '../services/actions/book.action';
 
 const View = () => {
 
-    const {camel} = useSelector(state => state.CamelReducers);
+    const {book} = useSelector(state => state.BookReducers);
     
     const { id } = useParams();
 
@@ -15,8 +14,14 @@ const View = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(findSingleCamel(id))
-    }, [])
+        if(id){
+            dispatch(findBooksAsync(id))
+        }
+    }, [id])
+
+    if(!book){
+        return <h1>Loading...</h1>
+    }
 
     return(
         <>
@@ -26,11 +31,11 @@ const View = () => {
             <Card className='mx-auto mt-5' style={{ width: '30rem' }}>
                 <Card.Img variant="top" src="../src/assets/camel-image.jpg" />
                 <Card.Body>
-                    <Card.Title><b>Camel Name :</b> {camel.camelName}</Card.Title>
+                    <Card.Title><b>Book Name :</b> {book.bTitle}</Card.Title>
                     <Card.Text>
-                        Additonal Data : {camel.additionalData}
+                        Book Info : {book.binfo}
                     </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Link className='btn bg-success' to='/'>Back To Book History</Link>
                 </Card.Body>
             </Card>
         </>

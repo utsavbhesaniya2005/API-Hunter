@@ -3,12 +3,12 @@ import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { getAsyncCamels, getAsyncDelete } from '../services/actions/camel.action'
+import { deleteBookAsync, findBooksAsync, getBooksAsync } from '../services/actions/book.action'
 import { useEffect } from 'react';
 
 const CamelHistory = () => {
 
-    const {camels, isLoading, errMsg} = useSelector(state => state.CamelReducers);
+    const {books, isLoading, errMsg} = useSelector(state => state.BookReducers);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -18,15 +18,16 @@ const CamelHistory = () => {
     }
 
     const handleDelete = (id) => {
-        dispatch(getAsyncDelete(id))
+        dispatch(deleteBookAsync(id))
     }
 
     const handleView = (id) => {
+        dispatch(findBooksAsync(id))
         navigate(`/view/${id}`)
     }
 
     useEffect(() => {
-        dispatch(getAsyncCamels())
+        dispatch(getBooksAsync())
     }, [])  
 
     return(
@@ -42,21 +43,29 @@ const CamelHistory = () => {
                     <Table striped bordered hover className='mt-5' data-bs-theme="dark">
                         <thead>
                             <tr>
-                                <th>Camel Id</th>
-                                <th>Camel Name</th>
-                                <th>Age</th>
-                                <th>Contact</th>
+                                <th>Book Id</th>
+                                <th>Book Title</th>
+                                <th>Author</th>
+                                <th>Genres</th>
+                                <th>Publication Year</th>
+                                <th>Book Info</th>
+                                <th>Price</th>
+                                <th>Total Pages</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                camels.map((data, index) => (
+                                books.map((data, index) => (
                                     <tr key={index}>
                                         <td>{data.id}</td>
-                                        <td>{data.camelName}</td>
-                                        <td>{data.age}</td>
-                                        <td>{data.contact}</td>
+                                        <td>{data.bTitle}</td>
+                                        <td>{data.author}</td>
+                                        <td>{data.genre}</td>
+                                        <td>{data.pyear}</td>
+                                        <td>{data.binfo}</td>
+                                        <td>{data.bprice}</td>
+                                        <td>{data.bpages}</td>
                                         <td>
                                             <Button variant='primary' onClick={() => handleEdit(data.id)}>Edit</Button>
                                             || <Button variant='danger' onClick={() => handleDelete(data.id)}>Delete</Button>

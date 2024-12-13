@@ -1,10 +1,8 @@
 import { combineReducers } from "redux";
-import AdminReducers from "./AdminReducers"
-import CamelReducers from "./CamelReducers";
+import BookReducers from "./BookReducers";
 
 const rootReducer = combineReducers({
-    AdminReducers,
-    CamelReducers
+    BookReducers
 })
 
 export default rootReducer;
